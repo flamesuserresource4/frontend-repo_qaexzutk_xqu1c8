@@ -9,6 +9,7 @@ import Contact from './components/Contact'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import CartSheet from './components/CartSheet'
+import Decor from './components/Decor'
 
 const API = import.meta.env.VITE_BACKEND_URL || ''
 
@@ -49,7 +50,8 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative">
+      <Decor />
       <Navbar cartCount={cart.reduce((s,it)=>s+it.quantity,0)} onCartClick={()=>setCartOpen(true)} />
       <Hero onCTAClick={()=>document.getElementById('product')?.scrollIntoView({behavior:'smooth'})} />
       <ProductSection onAddToCart={addToCart} />
