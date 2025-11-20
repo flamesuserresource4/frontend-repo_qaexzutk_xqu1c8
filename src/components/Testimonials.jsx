@@ -1,0 +1,35 @@
+import { useEffect, useState } from 'react'
+
+const API = import.meta.env.VITE_BACKEND_URL || ''
+
+export default function Testimonials() {
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    fetch(`${API}/api/testimonials`).then(r=>r.json()).then(setItems).catch(()=>{})
+  }, [])
+
+  return (
+    <section className="py-16 bg-white" id="reviews">
+      <div className="max-w-6xl mx-auto px-6">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-slate-800">Wat anderen zeggen</h2>
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {items.length === 0 && (
+            <div className="col-span-full text-slate-500">Er zijn nog geen reviews. We tonen alvast voorbeeldjes.</div>
+          )}
+          {(items.length ? items : [
+            {name:'Lisa', role:'Moeder', quote:'Elke avond kiezen we een kaart. Het brengt zoveel rust en verbinding.'},
+            {name:'Jeroen', role:'Leerkracht', quote:'Prachtige set om emoties bespreekbaar te maken in de klas.'},
+            {name:'Sophie', role:'Kindercoach', quote:'Heel mooi ontworpen en inhoudelijk sterk.'},
+          ]).map((t, i) => (
+            <div key={i} className="bg-rose-50/40 border border-rose-100 rounded-2xl p-5">
+              <div className="text-amber-600">“</div>
+              <p className="text-slate-700">{t.quote}</p>
+              <div className="mt-3 text-sm text-slate-500">— {t.name}{t.role ? `, ${t.role}`:''}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
